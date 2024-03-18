@@ -129,7 +129,7 @@ class relu:
         # TODO: Implement the relu forward pass. Store the result in forward_output    #
         ################################################################################
 
-        self.mask = (X > 0).astype(int)
+        self.mask = np.where(X > 0, 1, 0)
         forward_output = np.maximum(X, 0)
         
         return forward_output
@@ -294,8 +294,7 @@ def gradient_checker(DataSet, model):
         # Compute forward pass with w - epsilon
         model[layer_name].params[param_name] -= 2 * epsilon
         _, _, _, f_w_sub_epsilon = forward_pass(model, x, y)
-
-        # Compute approximate gradient
+       
         approximate_gradient = (f_w_add_epsilon - f_w_sub_epsilon) / (2 * epsilon_value)
 
         print("Check the gradient of %s in the %s layer from backpropagation: %f and from approximation: %f"
@@ -454,6 +453,3 @@ if __name__ == "__main__":
 
 #python neural_networks.py  --minibatch_size 5 --check_gradient --check_magnitude
 #python plot_train_process.py
-#https://github.com/AdalbertoCq/Deep-Learning-Specialization-Coursera/blob/master/Improving%20Deep%20Neural%20Networks/week1/GradientChecking.py
-#https://github.com/joshwcheung/csci-567/blob/master/Assignment-2/dnn_misc.py
-#https://github.com/fanghao6666/neural-networks-and-deep-learning/blob/master/py/Planar%20data%20classification%20with%20one%20hidden%20layer%20v3.py
